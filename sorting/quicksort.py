@@ -1,7 +1,7 @@
 """ To show funtionality of the quicksort algorithm. """
 
 import random
-from basic_sort_algs import swap
+from swap import swap
 
 def quicksort(lyst):
     """  """

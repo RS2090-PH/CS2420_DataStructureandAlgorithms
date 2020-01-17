@@ -2,7 +2,7 @@
 
 import random
 from arrays import Array
-from basic_sort_algs import swap
+from swap import swap
 
 def merge_sort(lyst):
     # lyst: list being sorted

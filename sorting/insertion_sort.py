@@ -1,5 +1,5 @@
 """ To show funtionality of the insertion sort algorithm. """
-from basic_sort_algs import swap
+from swap import swap
 
 def insertion_sort(lyst):
     """  """

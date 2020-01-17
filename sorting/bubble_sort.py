@@ -1,6 +1,6 @@
 """ Uses the bubble sort algorithm to sort a list. """
 
-from basic_sort_algs import swap
+from swap import swap
 
 def bubble_sort(lyst):
     """  """

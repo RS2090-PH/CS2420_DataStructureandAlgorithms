@@ -7,20 +7,14 @@ Employs memoization to improve the efficiency of recursive Fibonacci.
 
 def fib(n, table):
     """Fibonacci function with a table for memoization."""
-    if  n in table.keys:
-        return table[n]
-
+    if  :
+        
     else:
         # Attempt to get values for n - 1 and n - 2
         # from the table
         # If unsuccessful, recurse and add results to
         # the table
-        if n < 3:
-            return 1
-        else:
-            table = dict(n=n-1)
-            table = dict(n=n-2)
-            return fib(n - 1) + fib(n - 2)
+    
 
 def main():
     """Tests the function with some powers of 2."""

@@ -5,6 +5,8 @@ File: testquicksort.py
 Tests the quicksort algorithm
 """
 
+import random
+
 def insertionSort(lyst, left, right):
     i = left + 1
     while i < right + 1:
@@ -19,7 +21,6 @@ def insertionSort(lyst, left, right):
                 break
         lyst[j + 1] = item_to_insert
         i += 1
-
 
 def quicksort(lyst):
     if len(lyst) < 50:
@@ -57,10 +58,6 @@ def swap(lyst, i, j):
     temp = lyst[i]
     lyst[i] = lyst[j]
     lyst[j] = temp
-
-
-import random
-
 
 def main(size = 20, sort = quicksort):
     lyst = []

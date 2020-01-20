@@ -7,9 +7,9 @@ A program to compare run times for three types of searches:
     - Recursive Binary Search
     - Jump Search
 """
-from recursioncounter import RecursionCounter
 from time import perf_counter
 from random import seed, sample
+from recursioncounter import RecursionCounter
 
 def linear_search(lyst, target):
     """
@@ -27,10 +27,10 @@ def linear_search(lyst, target):
         bool: Returns True if the target is present
                 and False if not found.
     """
-    if not isinstance(target,int):
+    if not isinstance(target, int):
         raise ValueError("Target value must be an integer.")
     for step in lyst:
-        if not isinstance(step,int):
+        if not isinstance(step, int):
             raise ValueError("List values must be integers.")
     if target < 0:
         raise ValueError("Target value must be a positive integer.")
@@ -56,10 +56,10 @@ def recursive_binary_search(lyst, target):
         response provided by the recursive function. True
         if a match is found, and false otherwise.
     """
-    if not isinstance(target,int):
+    if not isinstance(target, int):
         raise ValueError("Target value must be an integer.")
     for step in lyst:
-        if not isinstance(step,int):
+        if not isinstance(step, int):
             raise ValueError("List values must be integers.")
     if target < 0:
         raise ValueError("Target value must be a positive integer.")
@@ -122,10 +122,10 @@ def jump_search(lyst, target):
         bool: Returns True if the target is present
                 and False if not found.
     """
-    if not isinstance(target,int):
+    if not isinstance(target, int):
         raise ValueError("Target value must be an integer.")
     for step in lyst:
-        if not isinstance(step,int):
+        if not isinstance(step, int):
             raise ValueError("List values must be integers.")
     if target < 0:
         raise ValueError("Target value must be a positive integer.")
@@ -167,11 +167,11 @@ def main():
         Void
     """
     test_val = 10000000
-    val_range = range(0,test_val)
+    val_range = range(0, test_val)
 
     print("Creating a sorted array of %8d" % (test_val))
     seed(3)
-    test_array = sample(val_range,k=test_val)
+    test_array = sample(val_range, k=test_val)
     test_array.sort()
     print("Finished creating a sorted array of %8d" % (test_val))
     print("")

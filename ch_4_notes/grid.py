@@ -1,12 +1,12 @@
 """
 Author: Ken Lambert
-""""
+"""
 
-from array import array
+from arrays import Array
 
 class Grid(object):
     """ Represents a twodimensional array. """
-    def __init__(self, rows, columns, filValue = None):
+    def __init__(self, rows, columns, fillValue = None):
         self.data = Array(rows)
         for  row in range(rows):
             self.data[row] = Array(columns, fillValue)

@@ -1,9 +1,5 @@
 import unittest
-from ex_3_9 import insertionSort
-from ex_3_9 import quicksort
-from ex_3_9 import quicksortHelper
-from ex_3_9 import partition
-from ex_3_9 import swap
+from ex_3_9 import insertionSort, quicksort, quicksortHelper, partition, swap
 
 class UnitTests(unittest.TestCase):
     def test_unit_test(self):

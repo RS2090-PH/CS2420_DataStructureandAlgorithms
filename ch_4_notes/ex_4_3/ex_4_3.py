@@ -25,6 +25,7 @@ class Array(object):
         self.logicalSize = 0
         # Track the capacity and fill value for adjustments later
         self.capacity = capacity
+        self.temp_cap = capacity
         self.fillValue = fillValue
         for count in range(capacity):
             self.items.append(fillValue)
@@ -64,9 +65,13 @@ class Array(object):
         # Double the physical size if no more room for items
         # and add the fillValue to the new cells in the underlying list
         # your code here
-        if len(self.items) <= self.logicalSize:   
-            temp = Array(len(self.items) * 2)
-            for rep in range(len(self.items)):
+        if self.logicalSize <= self.temp_cap:   
+            temp = list()
+            self.temp_cap = self.temp_cap * 2
+            for count in range(self.temp_cap):
+                temp.append(self.fillValue)
+
+            for rep in range(self.logicalSize):
                 temp[rep] = self.items[rep]
             self.items = temp
 
@@ -75,6 +80,15 @@ class Array(object):
         # Shrink the size by half but not below the default capacity
         # and remove those garbage cells from the underlying list
         # your code here 
+        if self.logicalSize <= self.temp_cap // 4 and self.temp_cap > self.capacity:
+            temp = list()
+            self.temp_cap = self.temp_cap // 2
+            for rep in range(self.logicalSize, self.temp_cap):
+                temp.append(self.fillValue)
+
+            for rep in range(self.logicalSize):
+                temp[rep] = self.items[rep]
+            self.items = temp
 
 def main():
     """Test code for modified Array class."""

@@ -1,4 +1,6 @@
 import unittest
+import io
+import re
 from node import Node
 from nodetest import printStructure, insert, pop
 from contextlib import redirect_stdout

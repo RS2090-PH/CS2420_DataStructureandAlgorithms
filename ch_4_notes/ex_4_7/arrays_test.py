@@ -1,5 +1,10 @@
 import unittest
-from arrays import Array, Grid, Matrix
+import io
+import re
+from contextlib import redirect_stdout
+from arrays import Array
+from grid import Grid
+from matrix import Matrix
 
 class UnitTests(unittest.TestCase):
     def test_add_test1(self):
@@ -11,7 +16,7 @@ class UnitTests(unittest.TestCase):
         with redirect_stdout(output):
             print(a+a)
         m1 = output.getvalue()
-        self.assertEqual(re.match("^(6\s6\s6(\s)*\n)+$", m1))
+        self.assertTrue(re.match("^(6\s6\s6(\s)*\n)+$", m1))
 
     def test_mul_test1(self):
         a = Matrix(3, 3, 3)

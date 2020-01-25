@@ -1,8 +1,9 @@
 import unittest
 import io
-from contextlib import redirect_stdout
+import re
 from node import Node
-from testnode import insert, printStructure
+from testnode import printStructure, insert
+from contextlib import redirect_stdout
 
 class UnitTests(unittest.TestCase):
     def test_insert_test(self):

@@ -41,21 +41,20 @@ def pop(index, head):
     """Removes the item at index from the linked structure
     referred to by head and returns the tuple (head, item)
     Precondition: 0 <= index < length(head)"""
-    if 0 <= index < length(head):
-        raise ValueError("Index falls outside or required range.")
+    if 0 > index or index >= length(head):
+        raise IndexError("Index out of range.")
+    elif index <= 0 or head.next is None:
+        removedItem = head.data
+        head = head.next
+        return (head, removedItem)
     else:
-        if index <= 0 or head.next is None:
-            removedItem = head.data
-            head = head.next
-            return removedItem
-        else:
-            probe = head
-            while index > 1 and probe.next.next != None:
-                probe = probe.next
-                index -= 1
-            removedItem = probe.next.data
-            probe.next = probe.next.next
-            return removedItem
+        probe = head
+        while index > 1 and probe.next.next != None:
+            probe = probe.next
+            index -= 1
+        removedItem = probe.next.data
+        probe.next = probe.next.next
+        return (head, removedItem)
 
 def printStructure(head):
     """Prints the items in the structure referred to by head."""
@@ -95,8 +94,5 @@ def main():
     printStructure(head)
 
     pop(4, head)
-    
-
-
 
 if __name__ == "__main__": main()

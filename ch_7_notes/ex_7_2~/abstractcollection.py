@@ -10,12 +10,10 @@ class AbstractCollection(object):
     def __init__(self, sourceCollection = None):
         """Sets the initial state of self, which includes the
         contents of sourceCollection, if it's present."""
-        self.sourceCollection = sourceCollection
         self.size = 0
-        print(type(sourceCollection))
-        if sourceCollection != None:
+        if sourceCollection:
             for item in sourceCollection:
-                self.__add__(item)
+                self.add(item)
 
     # Accessor methods
     def isEmpty(self):
@@ -29,13 +27,13 @@ class AbstractCollection(object):
     def __str__(self):
         """Returns the string representation of self."""
         return "[" + ", ".join(map(str, self)) + "]"
-        
+
     def __add__(self, other):
         """Returns a new bag containing the contents
         of self and other."""
         result = type(self)(self)
         for item in other:
-            result.__add__(item)
+            result.add(item)
         return result
 
     def __eq__(self, other):

@@ -14,9 +14,7 @@ class LinkedStack(AbstractStack):
         """Sets the initial state of self, which includes the
         contents of sourceCollection, if it's present."""
         self.items = None
-        self.size = 0
-        self.sourceCollection = sourceCollection
-        self.ab_collection = AbstractStack(self.sourceCollection) 
+        AbstractStack.__init__(self, sourceCollection)
 
     # Accessor methods
     def __iter__(self):
@@ -25,22 +23,21 @@ class LinkedStack(AbstractStack):
         
         def visitNodes(node):
             """Adds items to tempList from tail to head."""
-            tempList = list()
-            if node != None:
+            if not node is None:
                 visitNodes(node.next)
                 tempList.append(node.data)
-            
-            visitNodes(self.items)
-            return iter(tempList)
+                
+        tempList = list()                
+        visitNodes(self.items)
+        return iter(tempList)
 
     def peek(self):
         """
         Returns the item at the top of the stack.
         Precondition: the stack is not empty.
         Raises: KeyError if the stack is empty."""
-        if self.items == None:
-            raise KeyError("Stack is empty.")
-
+        if self.isEmpty():
+            raise KeyError("The stack is empty.")
         return self.items.data
 
     # Mutator methods
@@ -60,12 +57,9 @@ class LinkedStack(AbstractStack):
         Precondition: the stack is not empty.
         Raises: KeyError if the stack is empty.
         Postcondition: the top item is removed from the stack."""
-        if self.items == None:
-            raise KeyError("No items to pop.")
-        else:
-            oldItem = self.items.data
-            self.items = self.items.next
-            self.size -= 1
-            return oldItem
-               
-        
+        if self.isEmpty():
+            raise KeyError("The stack is empty.")
+        oldItem = self.items.data
+        self.items = self.items.next
+        self.size -= 1
+        return oldItem

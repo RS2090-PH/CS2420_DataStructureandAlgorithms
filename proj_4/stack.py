@@ -8,58 +8,90 @@ This file contains the Stack class and constructor/push/pop/top/size/clear
 
 class Stack(): # < Pylint said object wasn't necessary for cleanliness in pythong3...
     """
-    QuickDescription.
+    The ADT Stack Class.
+
+    Allows the user to:
+        -create stack
+        -push to stack
+        -pop from stack
+        -see top item in stack
+        -see stack size
+        -clear the stack
     """
     def __init__(self):
         """
         QuickDescription.
         Process:
-            FullProcessDescription.
+             initializes a new abstract stack objects by using a list
+             object and item count.
         Args:
-            Argument(Type): ArgDescription
+            self: self
         Returns:
             ReturnValue(Type): ReturnDescription
         """
         self.stack = list()
         self.count = 0
 
+    def __str__(self):
+        """
+        Allows user to print the stack as a string.
+        Process:
+            -creates a temp string and concatenates each value on
+              the stack to the temp string, returning the temp
+              string in the end
+        Args:
+            self: self
+        Returns:
+            temp(str): String created from stack items
+        """
+        temp = ""
+        for item in self.stack:
+            temp += (" " + item)
+
+        return temp
+
     def push(self, item):
         """
-        QuickDescription.
+        Pushes received item to the end of the stack.
         Process:
-            FullProcessDescription.
+            -Increments stack item count
+            -Receives item to be pushed onto stack and appends to stack
         Args:
-            Argument(Type): ArgDescription
+            self: self
+            item(int/float/str): Item to be pushed onto stack
         Returns:
-            ReturnValue(Type): ReturnDescription
+            None
         """
         self.count += 1
         self.stack.append(item)
 
     def pop(self):
         """
-        QuickDescription.
+        Removes and returns top item on the stack.
         Process:
-            FullProcessDescription.
+            -Decriments stack item count
+            -Pops last item from stack
         Args:
-            Argument(Type): ArgDescription
+            self: self
         Returns:
-            ReturnValue(Type): ReturnDescription
+            Returns item removed from stack
         """
         if self.count <= 0:
             raise IndexError("Cannot pop from an empty stack.")
         self.count -= 1
         return self.stack.pop()
 
-    def top(self):
+    def peek(self):
         """
-        QuickDescription.
+        Returns the item at the top of the stack.
         Process:
-            FullProcessDescription.
+            -checks the stack size and returns an IndexError if stack
+              is empty
+            -returns item at the end of stack
         Args:
-            Argument(Type): ArgDescription
+            self: self
         Returns:
-            ReturnValue(Type): ReturnDescription
+            last item in stack
         """
         if self.count <= 0:
             raise IndexError("No items currently in stack.")
@@ -67,25 +99,26 @@ class Stack(): # < Pylint said object wasn't necessary for cleanliness in python
 
     def size(self):
         """
-        QuickDescription.
+        Returns the size of the stack.
         Process:
-            FullProcessDescription.
+            -returns the current count for stack size
         Args:
-            Argument(Type): ArgDescription
+            self: self
         Returns:
-            ReturnValue(Type): ReturnDescription
+            self.count(int): The item count in the stack
         """
         return self.count
 
     def clear(self):
         """
-        QuickDescription.
+        Removes every item in the stack.
         Process:
-            FullProcessDescription.
+            -pops the items from the stack while the stack size
+              is greater than 0.
         Args:
-            Argument(Type): ArgDescription
+            self: self
         Returns:
-            ReturnValue(Type): ReturnDescription
+            None
         """
         while self.count > 0:
             self.pop()

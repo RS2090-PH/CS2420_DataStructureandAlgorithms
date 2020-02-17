@@ -18,14 +18,14 @@ class TestStack(unittest.TestCase):
         stk.push(3.14)
         stk.push("cat")
         self.assertEqual(stk.size(), 3)
-        self.assertEqual(stk.top(), "cat")
+        self.assertEqual(stk.peek(), "cat")
         self.assertEqual(stk.size(), 3)
         self.assertEqual(stk.pop(), "cat")
         self.assertEqual(stk.size(), 2)
         self.assertAlmostEqual(stk.pop(), 3.14)
         self.assertEqual(stk.pop(), 1)
         self.assertEqual(stk.size(), 0)
-        self.assertRaises(IndexError, stk.top)
+        self.assertRaises(IndexError, stk.peek)
         self.assertRaises(IndexError, stk.pop)
 
         for i in range(100):

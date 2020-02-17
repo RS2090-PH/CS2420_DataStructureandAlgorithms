@@ -6,7 +6,7 @@ This file contains the Stack class and constructor/push/pop/top/size/clear
     methods used for creating and modifying a stack.
 """
 
-class Stack(): # < Pylint said object wasn't necessary for cleanliness in pythong3...
+class Stack(): # < Pylint said object wasn't necessary for cleanliness in python3...
     """
     The ADT Stack Class.
 

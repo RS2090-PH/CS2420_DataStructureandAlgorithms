@@ -305,10 +305,10 @@ class LinkedBST(AbstractCollection):
         def recurse(node, item):
             if node != None:
                 if item >= node.data:
-                    recurse(node.left, item)
+                    recurse(node.right, item)
                 elif item < node.data:
                     succ.push(node.data)
-                    recurse(node.right, item)
+                    recurse(node.left, item)
 
         if self.isEmpty():
             return None

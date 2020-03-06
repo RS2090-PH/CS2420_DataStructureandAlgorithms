@@ -143,5 +143,8 @@ def main():
         print("answer: ", eval_postfix(in2post(item)))
         print()
 
+        print("2+5*7^2")
+        print("matt's postfix: ", in2post("2+5*7^2"))
+
 if __name__ == "__main__":
     main()

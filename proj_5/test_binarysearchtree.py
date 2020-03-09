@@ -37,13 +37,21 @@ class TestBinarySearchTree(unittest.TestCase):
         bst.add(2)
         self.assertEqual(bst.height(), 2)
 
-    def test_find(self):
+    def test_find_present_value(self):
         bst = BinarySearchTree()
         seed(0)
         data = sample(range(1, 400), k=123)
         for datum in data:
             bst.add(datum)
-        self.assertEqual(bst.find(data[0]).data, data[0])
+        self.assertEqual(bst.find(data[0]), data[0]) # bst.find(data[0]).data changed to bst.find(data[0]).
+                                                                #.data atribute unnecessary for test
+
+    def test_find_missing_Value(self):
+        bst = BinarySearchTree()
+        seed(0)
+        data = sample(range(1, 400), k=123)
+        for datum in data:
+            bst.add(datum)
         self.assertEqual(bst.find(401), None)
 
     def test_remove(self):
@@ -55,7 +63,7 @@ class TestBinarySearchTree(unittest.TestCase):
         bst.remove(data[0])
         self.assertEqual(bst.find(data[0]), None)
 
-    def test_preorder(self):
+    def test_preorder_type(self):
         bst = BinarySearchTree()
         seed(0)
         data = sample(range(1, 400), k=123)
@@ -63,7 +71,23 @@ class TestBinarySearchTree(unittest.TestCase):
             bst.add(datum)
         output = bst.preorder()
         self.assertTrue(isinstance(output, list))
+
+    def test_preorder_length(self):
+        bst = BinarySearchTree()
+        seed(0)
+        data = sample(range(1, 400), k=123)
+        for datum in data:
+            bst.add(datum)
+        output = bst.preorder()
         self.assertEqual(len(output), 123)
+
+    def test_preorder_output(self):
+        bst = BinarySearchTree()
+        seed(0)
+        data = sample(range(1, 400), k=123)
+        for datum in data:
+            bst.add(datum)
+        output = bst.preorder()
         self.assertEqual(output[0], data[0])
 
     def test_string(self):

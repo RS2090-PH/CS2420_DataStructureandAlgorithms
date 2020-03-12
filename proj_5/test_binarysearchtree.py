@@ -43,8 +43,7 @@ class TestBinarySearchTree(unittest.TestCase):
         data = sample(range(1, 400), k=123)
         for datum in data:
             bst.add(datum)
-        self.assertEqual(bst.find(data[0]), data[0]) # bst.find(data[0]).data changed to bst.find(data[0]).
-                                                                #.data atribute unnecessary for test
+        self.assertEqual(bst.find(data[0]).data, data[0])
 
     def test_find_missing_Value(self):
         bst = BinarySearchTree()

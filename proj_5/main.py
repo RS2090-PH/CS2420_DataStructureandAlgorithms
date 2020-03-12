@@ -1,9 +1,14 @@
-from binarysearchtree import BinarySearchTree
-from random import seed, sample
+"""
+Author: Robby Stohel
+File: Main.py
 
+This file provides a main driver to test the binary search and node classes.
+"""
+
+from binarysearchtree import BinarySearchTree
 
 def main():
-
+    """ Main driver function to test binary search. """
     test = BinarySearchTree()
     test.add(21)
     test.add(26)
@@ -19,9 +24,19 @@ def main():
     test.add(3)
     test.add(7)
 
+    preorder = test.preorder()
+    for item in preorder:
+        print(str(item) + ", ", end=" ")
+    print("")
     print(test)
 
-    #print(test)
+    test.remove(21)
+    test.remove(9)
+    test.remove(4)
+    test.remove(18)
+    test.remove(15)
+    test.remove(7)
+    print(test)
 
 if __name__ == "__main__":
     main()

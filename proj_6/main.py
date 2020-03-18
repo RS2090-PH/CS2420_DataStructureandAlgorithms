@@ -29,6 +29,7 @@ def main():
         print(str(item) + ", ", end=" ")
     print("")
     print(test)
+    print("Lonsg string so I can see the test height: ", test.height())
 
     test.remove(21)
     test.remove(9)
@@ -37,6 +38,29 @@ def main():
     test.remove(15)
     test.remove(7)
     print(test)
+
+    bst = BinarySearchTree()
+    print("Produced: ", bst.height())
+    print("Expects: ", -1)
+    for i in range(511):
+        bst.add(i)
+
+    print("Produced: ", bst.height())
+    print("Expects: ", 510)
+    bst.rebalance_tree()
+    print("Produced: ", bst.height())
+    print("Expects: ", 8)
+
+    newtest = BinarySearchTree()
+    for i in range(7):
+        newtest.add(i)
+    newtest.rebalance_tree()
+    print(newtest)
+
+    lasttest = BinarySearchTree()
+    lasttest.add(1)
+    print("Added")
+    lasttest.add(1)
 
 if __name__ == "__main__":
     main()

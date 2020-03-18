@@ -89,6 +89,7 @@ class BinarySearchTree(): # 'object' removed from arg as per pylint
             None(None): No return
         """
         self.root = node
+        self.hgt = -1
 
     def __str__(self):
         """
@@ -226,8 +227,12 @@ class BinarySearchTree(): # 'object' removed from arg as per pylint
                 if node.height <= node.right_child.height:
                     node.update_height()
 
+        present = self.find(data)
+
         if self.root is None:
             self.root = Node(data)
+        elif present is not None:
+            raise ValueError("Value already in tree")
         else:
             add_helper(self.root, data)
 
@@ -407,6 +412,54 @@ class BinarySearchTree(): # 'object' removed from arg as per pylint
         preorder_helper(self.root)
         return order
 
+    def inorder(self):
+        """
+        Creates an preordered list of the tree's values.
+        Process:
+            Calls preorder_helper method recursively, applying the data to the
+                order data list value.
+        Args:
+            self(BinarySearchTree): Obligatory self arguement
+        Returns:
+            order(list): The list type, preorder tree data
+        """
+        order = list()
+
+        def inorder_helper(node):
+            """
+            Retrieves tree data in in-order.
+            Process:
+                Recursively adds tree data to order list.
+            Args:
+                node(Node): Successive nodes for ordering
+            Returns:
+                None(None): Does not return
+            """
+            RecursionCounter()
+
+            if node is not None:
+                inorder_helper(node.left_child)
+                order.append(node.data)
+                inorder_helper(node.right_child)
+
+        inorder_helper(self.root)
+        return order
+
+    def rebalance_tree(self):
+        temp_list = self.inorder()
+        temp_tree = BinarySearchTree()
+
+        def rebalance_helper(tmp_list):
+            if len(tmp_list) != 0:
+                mid = round(len(tmp_list) / 2)
+                temp_tree.add(tmp_list[mid])
+                rebalance_helper(tmp_list[:mid])
+                rebalance_helper(tmp_list[mid+1:])
+
+        if self is not None:
+            rebalance_helper(temp_list)
+            self.root = temp_tree.root
+
     def height(self):
         """
         Check object height.
@@ -418,13 +471,17 @@ class BinarySearchTree(): # 'object' removed from arg as per pylint
         Returns:
             hgt(int): Final object height
         """
-        def recurse(node):
-            """ Recurses to increment height (hgt) value. """
-            if node is None:
-                return 0
-            else:
-                return 1 + max(recurse(node.left_child), recurse(node.right_child))
-        hgt = recurse(self.root)
-        if not self.is_empty():
-            hgt -= 1
-        return hgt
+        self.hgt = -1
+
+        def height_helper(node, height):
+            if node is not None:
+                if height <= self.hgt:
+                    self.hgt = height + 1
+                    height_helper(node.left_child, height + 1)
+                    height_helper(node.right_child, height + 1)
+        
+        if self.is_empty is True:
+            return self.hgt
+        else:
+            height_helper(self.root, self.hgt)
+            return self.hgt

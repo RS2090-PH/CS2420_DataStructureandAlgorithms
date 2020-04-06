@@ -13,18 +13,14 @@ class HashMap():    # 'object' removed based on pylint recommendation
         self.itemct = 0
         self.hashmap = list()
         self.top_entries = list()
-        for count in range(0, 15):
-            self.top_entries.append(Entry())
+        for count in range(0,15):
+            self.top_entries.append(Entry("EMPTY", 0))
         for item in range(0, self.cap):
             self.hashmap.append(Entry())
 
     def __iter__(self):
         """ Allows hashmap to be iterable. """
         return iter(self.hashmap)
-
-    def __getitem__(self, item):
-        """ Allows hashmap indexing. """
-        return self.hashmap[item]
 
     def get(self, key, default=None):
         """ Locates and returns value of desired key. """
@@ -39,6 +35,7 @@ class HashMap():    # 'object' removed based on pylint recommendation
         initially present. Updates otherwise. """
         temp_index = self.key_to_index(key)
         flag = self.replace(key, value)
+        self.top_fifteen(key, value)
 
         if flag == 0:
 
@@ -83,17 +80,24 @@ class HashMap():    # 'object' removed based on pylint recommendation
         return 0
 
     def clear(self):
-        """ Clears current hashmap. """
+        """ FILL """
         self.cap = 8
         self.hashmap = list()
 
     def size(self):
-        """ Provides current size of hashmap. """
+        """ FILL """
         return self.itemct
 
     def capacity(self):
-        """ Provides the current capacity. """
+        """ FILL """
         return self.cap
+
+        """ FILL """
+        temp = list()
+        for item in self.hashmap:
+            if item.key() != "EMPTY":
+                temp.append(item.key())
+        return temp
 
     def keys(self):
         """ Creates a list containing all the keys present. """
@@ -131,26 +135,27 @@ class HashMap():    # 'object' removed based on pylint recommendation
         self.hashmap = temp.hashmap
         self.itemct = temp.itemct
 
-    def top_fifteen(self):
-        """ Produces a Top 15 list for value count. """
-        temp = self.keys()
-
-        for entry in temp:
-            if self.get(entry) > self.top_entries[14].value():
-                self.top_entries[14].ekey = entry
-                self.top_entries[14].evalue = self.get(entry)
+    def top_fifteen(self, entry_key, entry_value):
+        if entry_key in self.top_entries:
+            for entry in self.top_entries:
+                if entry_key == entry.key():
+                    entry.evalue = entry_value
+                    return "Entry updated"
+        else:
+            if entry_value > self.top_entries[14].evalue:
+                self.top_entries[14].ekey = entry_key
+                self.top_entries[14].evalue = entry_value
                 self.top_entries.sort(reverse=True, key=(lambda kv: (kv[1], kv[0])))
+                return "Entry added"
 
     def print_top(self):
-        """ Prints the Top 15 list. """
-        self.top_fifteen()
         print("The most common words are:")
         for item in self.top_entries:
             print("%-8s         %-5d"%(item.key(), item.value()))
 
 class Entry():    # 'object' removed based on pylint recommendation
     """ Class to organize individual entries. """
-    def __init__(self, key="EMPTY", value=0):
+    def __init__(self, key="EMPTY", value="EMPTY"):
         """ Initializes the class. """
         self.ekey = key
         self.evalue = value
@@ -160,25 +165,21 @@ class Entry():    # 'object' removed based on pylint recommendation
         return "{'%s','%s'}"%(self.ekey, self.evalue)
 
     def __eq__(self, other):
-        """ Allows entry value equal-to comparison. """
         if type(self.evalue) != type(other):
             return False
         return self.evalue == other
 
     def __lt__(self, other):
-        """ Allows entry value less-than comparison. """
         if type(self.evalue) != type(other):
             return False
         return self.evalue < other
 
     def __gt__(self, other):
-        """ Allows entry value greater-than comparison. """
         if type(self.evalue) != type(other):
             return False
         return self.evalue > other
 
     def __getitem__(self, item):
-        """ Allows entry key/value indexing. """
         if item == 0:
             return self.ekey
         elif item == 1:

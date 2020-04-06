@@ -29,12 +29,10 @@ def main():
     """ Main driver to run program. """
     hashmap = HashMap()
 
-    text_file = open("AliceInWonderland.txt", "r")
+    text_file = open("AliceInWonderland.txt", "r", encoding="utf8")
 
     for line in text_file:
-        line = text_file.readline()
         temp = clean_line(line)
-
         for word in temp:
             if hashmap.contains(word) is True:
                 tempvalue = hashmap.get(word)
@@ -42,14 +40,8 @@ def main():
             else:
                 hashmap.set(word, 1)
 
+    hashmap.print_top()
     text_file.close()
-
-    keys = hashmap.keys()
-    for items in keys:
-        print(items, hashmap.get(items))
-
-
-    
 
 if __name__ == "__main__":
     main()

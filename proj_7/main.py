@@ -33,6 +33,7 @@ def main():
 
     for line in text_file:
         temp = clean_line(line)
+
         for word in temp:
             if hashmap.contains(word) is True:
                 tempvalue = hashmap.get(word)

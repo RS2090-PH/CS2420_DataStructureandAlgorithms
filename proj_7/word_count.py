@@ -32,7 +32,7 @@ def main():
     
     # This loop counts the raw words
     for value in range(0, 15):
-        text_file = open("AliceInWonderland copy.txt", "r", encoding="utf8")
+        text_file = open("AliceInWonderland.txt", "r", encoding="utf8")
         for line in text_file:
             if words[value] in clean_line(line):
                 raw_count[value] += 1

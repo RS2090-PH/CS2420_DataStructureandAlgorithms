@@ -57,13 +57,12 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
         """
         if isinstance(label, str) is not True:
             raise ValueError("Label must be a string.")
-        else:
-            if label in self.graph:
-                raise ValueError("Vertex already present.")
-            else:
-                self.graph[label] = Vertex(label)
-                self.vertices += 1
-            return self
+        if label in self.graph:
+            raise ValueError("Vertex already present.")
+
+        self.graph[label] = Vertex(label)
+        self.vertices += 1
+        return self
 
     def add_edge(self, src, dest, wgt):
         """
@@ -106,8 +105,10 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
         Returns:
             vertex(Vertex): Returns vertex object
         """
-        if label in self.graph:
-            return self.graph[label]
+        if label not in self.graph:
+            raise ValueError("Vertex not in graph.")
+
+        return self.graph[label]
 
     def get_weight(self, src, dest):
         """
@@ -121,10 +122,10 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
         Returns:
             weight(int/float): The edge weight
         """
-        if src in self.graph:
-            return self.graph[src].get_edge_weight(dest)
-        else:
+        if src not in self.graph:
             raise ValueError("Source vertex not present.")
+
+        return self.graph[src].get_edge_weight(dest)
 
     def dfs(self, starting_vertex):
         """
@@ -140,7 +141,7 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
         temp = list()
         stack = list()
 
-        def recurse(vertex, lyst, stack):
+        def recurse(lyst, stack):
             """
             Recursive function to dig into graph.
             Process:
@@ -158,12 +159,12 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
                 stack.append(item.destination)
 
             for item in stack:
-                return recurse(item, lyst, stack)
+                return recurse(lyst, stack)
             return lyst
 
         if starting_vertex in self.graph.keys():
             stack.append(starting_vertex)
-            temp = recurse(starting_vertex, temp, stack)
+            temp = recurse(temp, stack)
         else:
             raise ValueError("Starting vertex not in graph.")
 
@@ -203,8 +204,8 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
             if position + 1 < len(lyst):
                 position += 1
                 return recurse(lyst[position], lyst, position)
-            else:
-                return lyst
+
+            return lyst
 
         if starting_vertex in self.graph.keys():
             temp.append(starting_vertex)
@@ -244,7 +245,7 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
 
             result = {}
 
-            for vertex in self.graph.keys():
+            for vertex in self.graph:
                 result[vertex] = dijkstra_dest(src, vertex)
 
             return result
@@ -295,7 +296,7 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
                     if self.graph[item.destination] is not None:
                         set_path(self.graph[item.destination])
 
-            for vertex in self.graph.keys():
+            for vertex in self.graph:
                 set_path(self.graph[vertex])
 
             def test_path(src, vertex):
@@ -315,10 +316,10 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
                 """
                 if vertex is False:
                     return False
-                elif vertex is src:
+                if vertex is src:
                     return True
-                else:
-                    return test_path(src, self.graph[vertex].get_pred())
+
+                return test_path(src, self.graph[vertex].get_pred())
 
             def get_path(path, src, vertex):
                 """
@@ -329,7 +330,7 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
                 Args:
                     path(list): The resulting path
                     src(str): The source label
-                    vertex(str): The vertex label for the currently 
+                    vertex(str): The vertex label for the currently
                     processed vertex
                 Returns:
                     path(list): Returns the resulting path
@@ -337,9 +338,9 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
                 if vertex is not src:
                     path.append(vertex)
                     return get_path(path, src, self.graph[vertex].get_pred())
-                else:
-                    path.append(src)
-                    return path
+
+                path.append(src)
+                return path
 
             if dest is not None:
                 test = test_path(src, dest)
@@ -355,8 +356,8 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
 
         if dest is None:
             return dijkstra_no_dest(src)
-        else:
-            return dijkstra_dest(src, dest)
+
+        return dijkstra_dest(src, dest)
 
     def clear_kijkstra(self):
         """
@@ -370,7 +371,7 @@ class Graph():          # Removed "object" at pylint's request. Using python 3+
         Returns:
             None(None): None
         """
-        for vertex in self.graph.keys():
+        for vertex in self.graph:
             self.graph[vertex].set_cost(math.inf)
             self.graph[vertex].set_pred(False)
             self.graph[vertex].set_visit(False)
@@ -554,7 +555,7 @@ class Vertex():          # Removed "object" at pylint's request. Using python 3+
 
 class Edge():          # Removed "object" at pylint's request. Using python 3+
     """ Edge class to create edge objects. """
-    def __init__(self, src, dest, wgt, dir=None):
+    def __init__(self, src, dest, wgt):
         """
         Initializer method to create edge objects.
         Process:
@@ -572,7 +573,6 @@ class Edge():          # Removed "object" at pylint's request. Using python 3+
         self.source = src
         self.destination = dest
         self.weight = float(wgt)
-        self.direction = dir
         self.visited = False
 
     def __str__(self):

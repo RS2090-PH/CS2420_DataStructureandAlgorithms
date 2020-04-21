@@ -29,11 +29,8 @@ class TestDefineGraph(unittest.TestCase):
 
         g.add_edge("A", "B", 1.0)
         g.add_edge("A", "C", 1.0)
-
         g.add_edge("B", "D", 1.0)
-
         g.add_edge("C", "E", 1.0)
-
         g.add_edge("E", "F", 1.0)
 
         gen = g.bfs("A")
@@ -44,6 +41,57 @@ class TestDefineGraph(unittest.TestCase):
         gen = g.bfs("C")
         data = [x for x in gen]
         self.assertEqual(len(data), 3)
+
+        gen = g.dfs("A")
+        data = [x for x in gen]
+        self.assertEqual(data[0], "A")
+        self.assertIn(data[-1], ("D", "F"))
+        self.assertEqual(len(data), 6)
+        gen = g.dfs("C")
+        data = [x for x in gen]
+        self.assertEqual(len(data), 3)
+
+    def test_bfs(self): # Robby's test
+        g = Graph()
+        self.assertRaises(ValueError, g.add_vertex, 0)
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 1.0)
+        g.add_edge("A", "C", 1.0)
+        g.add_edge("B", "D", 1.0)
+        g.add_edge("C", "E", 1.0)
+        g.add_edge("E", "F", 1.0)
+
+        gen = g.bfs("A")
+        data = [x for x in gen]
+        self.assertEqual(data[0], "A")
+        self.assertEqual(data[-1], "F")
+        self.assertEqual(len(data), 6)
+        gen = g.bfs("C")
+        data = [x for x in gen]
+        self.assertEqual(len(data), 3)
+
+
+    def test_dfs(self): # Robby's test
+        g = Graph()
+        self.assertRaises(ValueError, g.add_vertex, 0)
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 1.0)
+        g.add_edge("A", "C", 1.0)
+        g.add_edge("B", "D", 1.0)
+        g.add_edge("C", "E", 1.0)
+        g.add_edge("E", "F", 1.0)
 
         gen = g.dfs("A")
         data = [x for x in gen]
@@ -66,11 +114,8 @@ class TestDefineGraph(unittest.TestCase):
 
         g.add_edge("A", "B", 1.0)
         g.add_edge("A", "C", 1.0)
-
         g.add_edge("B", "D", 1.0)
-
         g.add_edge("C", "E", 1.0)
-
         g.add_edge("E", "F", 1.0)
         
         output = str(g)
@@ -88,16 +133,12 @@ class TestGraphPaths(unittest.TestCase):
 
         g.add_edge("A", "B", 2)
         g.add_edge("A", "F", 9)
-
         g.add_edge("B", "F", 6)
         g.add_edge("B", "D", 15)
         g.add_edge("B", "C", 8)
-
         g.add_edge("C", "D", 1)
-
         g.add_edge("E", "C", 7)
         g.add_edge("E", "D", 3)
-
         g.add_edge("F", "E", 3)
 
         self.assertRaises(ValueError, g.dijkstra_shortest_path, "cat")
@@ -120,6 +161,225 @@ class TestGraphPaths(unittest.TestCase):
         data = g.dijkstra_shortest_path("D")
         self.assertDictEqual(data, {'A':(math.inf, []), 'B':(math.inf, []), 'C':(math.inf, []), 'D':(0.0, ['D']), 'E':(math.inf, []), 'F':(math.inf, [])})
 
+    def test_dijk_1(self):
+        g = Graph()
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 2)
+        g.add_edge("A", "F", 9)
+        g.add_edge("B", "F", 6)
+        g.add_edge("B", "D", 15)
+        g.add_edge("B", "C", 8)
+        g.add_edge("C", "D", 1)
+        g.add_edge("E", "C", 7)
+        g.add_edge("E", "D", 3)
+        g.add_edge("F", "E", 3)
+
+        self.assertRaises(ValueError, g.dijkstra_shortest_path, "cat")
+
+    def test_dijk_2(self):
+        g = Graph()
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 2)
+        g.add_edge("A", "F", 9)
+        g.add_edge("B", "F", 6)
+        g.add_edge("B", "D", 15)
+        g.add_edge("B", "C", 8)
+        g.add_edge("C", "D", 1)
+        g.add_edge("E", "C", 7)
+        g.add_edge("E", "D", 3)
+        g.add_edge("F", "E", 3)
+
+        data = g.dijkstra_shortest_path("A", "B")
+        self.assertIsInstance(data, tuple)
+
+    def test_dijk_3(self):
+        g = Graph()
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 2)
+        g.add_edge("A", "F", 9)
+        g.add_edge("B", "F", 6)
+        g.add_edge("B", "D", 15)
+        g.add_edge("B", "C", 8)
+        g.add_edge("C", "D", 1)
+        g.add_edge("E", "C", 7)
+        g.add_edge("E", "D", 3)
+        g.add_edge("F", "E", 3)
+
+        data = g.dijkstra_shortest_path("A", "B")
+        self.assertEqual(data, (2.0, ['B', 'A']))
+
+    def test_dijk_4(self):
+        g = Graph()
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 2)
+        g.add_edge("A", "F", 9)
+        g.add_edge("B", "F", 6)
+        g.add_edge("B", "D", 15)
+        g.add_edge("B", "C", 8)
+        g.add_edge("C", "D", 1)
+        g.add_edge("E", "C", 7)
+        g.add_edge("E", "D", 3)
+        g.add_edge("F", "E", 3)
+
+        data = g.dijkstra_shortest_path("A", "C")
+        self.assertEqual(data, (10.0, ['C', 'B', 'A']))
+
+    def test_dijk_5(self):
+        g = Graph()
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 2)
+        g.add_edge("A", "F", 9)
+        g.add_edge("B", "F", 6)
+        g.add_edge("B", "D", 15)
+        g.add_edge("B", "C", 8)
+        g.add_edge("C", "D", 1)
+        g.add_edge("E", "C", 7)
+        g.add_edge("E", "D", 3)
+        g.add_edge("F", "E", 3)
+
+        data = g.dijkstra_shortest_path("A", "D")
+        self.assertEqual(data, (11.0, ['D', 'C', 'B', 'A']))
+
+    def test_dijk_6(self):
+        g = Graph()
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 2)
+        g.add_edge("A", "F", 9)
+        g.add_edge("B", "F", 6)
+        g.add_edge("B", "D", 15)
+        g.add_edge("B", "C", 8)
+        g.add_edge("C", "D", 1)
+        g.add_edge("E", "C", 7)
+        g.add_edge("E", "D", 3)
+        g.add_edge("F", "E", 3)
+
+        data = g.dijkstra_shortest_path("A", "F")
+        self.assertEqual(data, (8.0, ['F', 'B', 'A']))
+
+    def test_dijk_7(self):
+        g = Graph()
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 2)
+        g.add_edge("A", "F", 9)
+        g.add_edge("B", "F", 6)
+        g.add_edge("B", "D", 15)
+        g.add_edge("B", "C", 8)
+        g.add_edge("C", "D", 1)
+        g.add_edge("E", "C", 7)
+        g.add_edge("E", "D", 3)
+        g.add_edge("F", "E", 3)
+
+        data = g.dijkstra_shortest_path("D",'A')
+        self.assertEqual(data, (math.inf, []))
+
+    def test_dijk_8(self):
+        g = Graph()
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 2)
+        g.add_edge("A", "F", 9)
+        g.add_edge("B", "F", 6)
+        g.add_edge("B", "D", 15)
+        g.add_edge("B", "C", 8)
+        g.add_edge("C", "D", 1)
+        g.add_edge("E", "C", 7)
+        g.add_edge("E", "D", 3)
+        g.add_edge("F", "E", 3)
+
+        data = g.dijkstra_shortest_path("A")
+        self.assertIsInstance(data, dict)
+
+    def test_dijk_9(self):
+        g = Graph()
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 2)
+        g.add_edge("A", "F", 9)
+        g.add_edge("B", "F", 6)
+        g.add_edge("B", "D", 15)
+        g.add_edge("B", "C", 8)
+        g.add_edge("C", "D", 1)
+        g.add_edge("E", "C", 7)
+        g.add_edge("E", "D", 3)
+        g.add_edge("F", "E", 3)
+
+        data = g.dijkstra_shortest_path("A")
+        self.assertDictEqual(data, {'A':(0.0, ['A']), 'B':(2.0, ['B', 'A']), 'C':(10.0, ['C', 'B', 'A']), 'D':(11.0, ['D', 'C', 'B', 'A']), 'E':(11.0, ['E', 'F', 'B', 'A']), 'F':(8.0, ['F', 'B', 'A'])})
+
+    def test_dijk_10(self):
+        g = Graph()
+        g.add_vertex("A")
+        g.add_vertex("B")
+        g.add_vertex("C")
+        g.add_vertex("D")
+        g.add_vertex("E")
+        g.add_vertex("F")
+
+        g.add_edge("A", "B", 2)
+        g.add_edge("A", "F", 9)
+        g.add_edge("B", "F", 6)
+        g.add_edge("B", "D", 15)
+        g.add_edge("B", "C", 8)
+        g.add_edge("C", "D", 1)
+        g.add_edge("E", "C", 7)
+        g.add_edge("E", "D", 3)
+        g.add_edge("F", "E", 3)
+
+        data = g.dijkstra_shortest_path("D")
+        self.assertDictEqual(data, {'A':(math.inf, []), 'B':(math.inf, []), 'C':(math.inf, []), 'D':(0.0, ['D']), 'E':(math.inf, []), 'F':(math.inf, [])})
+
 class TestCodeingStandards(unittest.TestCase):
     def test_code_quality(self):
         from pylint import epylint as lint
@@ -133,8 +393,3 @@ class TestCodeingStandards(unittest.TestCase):
             score = float(output)
             self.assertGreaterEqual(score, 8.5)        
         
-
-
-
-
-

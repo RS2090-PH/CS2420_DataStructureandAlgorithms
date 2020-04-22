@@ -1,64 +1,45 @@
 """
-Author: NAME
-File: FILE
+Author: Robby Stohel
+File: course.py
 
-DESCRIPTION
+This module contains the Course class for creating and modifying
+Course objects.
 """
 
-class Course(object):
-    """
-    QuickDescription.
-    Process:
-        FullProcessDescription.
-    Args:
-        Argument(Type): ArgDescription
-    Returns:
-        ReturnValue(Type): ReturnDescription
-    """
-    def __init__(self, num = 0, crs = "", cred = 0.0, gra = 0.0, next = None):
-        self.c_num = int(num)
-        self.crs = str(crs)
-        self.cred = float(cred)
-        self.gra = float(gra)
-        self.next = next
+class Course():     # Removed "object" as pylint advises python3+ doesn't need it.
+    """ Course class to create individual course objects. """
+    def __init__(self, num=0, crs="", cred=0.0, gra=0.0, nxt=None):
+        """ Course object initializer. """
+        if isinstance(num, int) is not True or num < 0:
+            raise ValueError("Course ID must be an integer.")
+        if crs is None:
+            raise ValueError("Course Name cannot be None.")
+        if isinstance(cred, (int, float)) is not True or cred < 0:
+            raise ValueError("Course Credits must be an integer or float.")
+        if isinstance(gra, (int, float)) is not True or gra < 0:
+            raise ValueError("Course Credits must be a positive integer or float.")
+        self.c_num = num
+        self.crs = crs
+        self.cred = cred
+        self.gra = gra
+        self.next = nxt
 
     def __str__(self):
-        return str(self.c_num) + " " + str(self.crs) + " Grade: " + str(self.gra) + " Credit Hours: " + str(self.cred)
+        """ Provides a string representation of Course objects. """
+        return "%s %s Grade:%1.1f Credit Hours: %1.1f"%(self.c_num, self.crs, self.gra, self.cred)
 
     def number(self):
-        """ Space holder """
+        """ Returns the course number. """
         return self.c_num
 
     def name(self):
-        """ Space holder """
+        """ Returns the course name. """
         return self.crs
 
     def credit_hr(self):
-        """ Space holder """
+        """ Returns the credit hour amount. """
         return self.cred
 
     def grade(self):
-        """ Space holder """
+        """ Returns the grade point value. """
         return self.gra
-    
-def main():
-    """ To test list """
-
-    head = None
-    head = Course(1400, "Introduction to Programming", 4, 3.6, head)
-    head = Course(1410, "C++ Programming", 4, 2.6, head)
-    head = Course(2810, "Computer Architecture", 3, 3.8, head)
-
-    print(head)
-    head = head.next
-    print(head)
-    head = head.next
-    print(head)
-
-    print(head.number())
-    print(head.name())
-    print(head.credit_hr())
-    print(head.grade())
-
-if __name__ == "__main__":
-    main()

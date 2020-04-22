@@ -8,7 +8,7 @@ Course objects.
 
 class Course():     # Removed "object" as pylint advises python3+ doesn't need it.
     """ Course class to create individual course objects. """
-    def __init__(self, num=0, crs="", cred=0.0, gra=0.0, nxt=None):
+    def __init__(self, num=0, crs="", cred=0.0, gra=0.0):
         """ Course object initializer. """
         if isinstance(num, int) is not True or num < 0:
             raise ValueError("Course ID must be an integer.")
@@ -22,7 +22,7 @@ class Course():     # Removed "object" as pylint advises python3+ doesn't need i
         self.crs = crs
         self.cred = cred
         self.gra = gra
-        self.next = nxt
+        self.next = None
 
     def __str__(self):
         """ Provides a string representation of Course objects. """
